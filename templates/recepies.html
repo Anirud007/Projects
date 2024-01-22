@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Receipe APP</title>
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-3 shadow-lg" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Add Receipe</h2>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Receipe Name</label>
+            <input name="receipe_name" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Receipe Description</label>
+            <textarea name="receipe_description" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Receipe Image</label>
+            <input name="recepie_image" type="file" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Receipe</button>
+    </form>
+    <table class="table table-bordered table-striped-columns">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Receipe Name</th>
+                <th scope="col">Receipe Description</th>
+                <th scope="col">Receipe Image</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for recepie in recepies %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ recepie.r_name }}</td>
+                <td>{{ recepie.r_des }}</td>
+                <td>
+                    <img src="/media/{{ recepie.r_image }}" style="height: 200px; width: 400px;">
+                </td>
+                <td>
+                    <a href="/delete/{{ recepie.id }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
